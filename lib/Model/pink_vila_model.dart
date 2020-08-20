@@ -1,73 +1,73 @@
-// To parse this JSON data, do
-//
-//     final pinkVillaModel = pinkVillaModelFromJson(jsonString);
+class PinkVilaModel {
+  List<Nodes> nodes;
 
-import 'dart:convert';
+  PinkVilaModel({this.nodes});
 
-PinkVillaModel pinkVillaModelFromJson(String str) => PinkVillaModel.fromJson(json.decode(str));
+  PinkVilaModel.fromJson(Map<String, dynamic> json) {
+    if (json['nodes'] != null) {
+      nodes = new List<Nodes>();
+      json['nodes'].forEach((v) {
+        nodes.add(new Nodes.fromJson(v));
+      });
+    }
+  }
 
-String pinkVillaModelToJson(PinkVillaModel data) => json.encode(data.toJson());
-
-class PinkVillaModel {
-  PinkVillaModel({
-    this.nodes,
-  });
-
-  List<NodeElement> nodes;
-
-  factory PinkVillaModel.fromJson(Map<String, dynamic> json) => PinkVillaModel(
-    nodes: List<NodeElement>.from(json["nodes"].map((x) => NodeElement.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "nodes": List<dynamic>.from(nodes.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.nodes != null) {
+      data['nodes'] = this.nodes.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class NodeElement {
-  NodeElement({
-    this.node,
-  });
+class Nodes {
+  Node node;
 
-  NodeNode node;
+  Nodes({this.node});
 
-  factory NodeElement.fromJson(Map<String, dynamic> json) => NodeElement(
-    node: NodeNode.fromJson(json["node"]),
-  );
+  Nodes.fromJson(Map<String, dynamic> json) {
+    node = json['node'] != null ? new Node.fromJson(json['node']) : null;
+  }
 
-  Map<String, dynamic> toJson() => {
-    "node": node.toJson(),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.node != null) {
+      data['node'] = this.node.toJson();
+    }
+    return data;
+  }
 }
 
-class NodeNode {
-  NodeNode({
-    this.title,
-    this.nidDontUse,
-    this.fieldPhotoImageSection,
-    this.path,
-    this.nid,
-  });
-
+class Node {
   String title;
   String nidDontUse;
   String fieldPhotoImageSection;
   String path;
   String nid;
 
-  factory NodeNode.fromJson(Map<String, dynamic> json) => NodeNode(
-    title: json["title"],
-    nidDontUse: json["nid_dont_use"],
-    fieldPhotoImageSection: json["field_photo_image_section"],
-    path: json["path"],
-    nid: json["nid"],
-  );
+  Node(
+      {this.title,
+        this.nidDontUse,
+        this.fieldPhotoImageSection,
+        this.path,
+        this.nid});
 
-  Map<String, dynamic> toJson() => {
-    "title": title,
-    "nid_dont_use": nidDontUse,
-    "field_photo_image_section": fieldPhotoImageSection,
-    "path": path,
-    "nid": nid,
-  };
+  Node.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    nidDontUse = json['nid_dont_use'];
+    fieldPhotoImageSection = json['field_photo_image_section'];
+    path = json['path'];
+    nid = json['nid'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    data['nid_dont_use'] = this.nidDontUse;
+    data['field_photo_image_section'] = this.fieldPhotoImageSection;
+    data['path'] = this.path;
+    data['nid'] = this.nid;
+    return data;
+  }
 }
